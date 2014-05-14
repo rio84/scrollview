@@ -31,7 +31,7 @@
 		return coors;
 	},checkBouce=function(el,deltaY){
 		var st=el.scrollTop,jam=el.mscrollJam,createJam=function(){
-			if(!jam){
+			if(!(jam=el.mscrollJam)){
 				el.mscrollJam=jam=document.createElement('div');
 				jam.style.width="100%";
 				jam.style.height=0;
@@ -39,27 +39,48 @@
 			
 			return jam;
 		},
+        boucing=function(dy){
+            var jamHeight=dy;
+            console.log('jamHeight',jamHeight)
+            if(jamHeight>0){
+                jam.style.height=jamHeight+'px';
+            }else{
+                el.removeChild(jam);
+                el.mscrollJam=null;
+            }
+
+        },
 			deltaY=deltaY||0;
-console.log(deltaY,st+deltaY)
+//console.log(deltaY,st+deltaY)
 		if(st+deltaY<=0){
 			
 			el.insertBefore(createJam(),el.firstChild);//注意没有 firstChild 的情况。虽然这很变态
-			if(deltaY<0){
-				jam.style.height=(Math.abs(deltaY)+parseFloat(jam.style.height))+'px';
-			}
-		}else if(st+deltaY>=el.scrollHeight-el.clientHeight){
+
+                boucing(-deltaY);
+
+		}else if(st+deltaY>=el.scrollHeight-el.clientHeight){console.log('append')
 			el.appendChild(createJam());
+
+                boucing(deltaY);
+
 		}else if(jam){
 
 			el.removeChild(jam);
 			el.mscrollJam=null;
-			if(deltaY>0){
-				jam.style.height=(Math.abs(deltaY)+parseFloat(jam.style.height))+'px';
-			}
-		}
-		return jam;
 
-	};
+		}
+		return el.mscrollJam;
+
+    },
+    removeBounce=function(el){
+        var jam=el.mscrollJam;
+        if(jam){
+            el.removeChild(jam);
+             el.mscrollJam=null;
+            //console.log('remove:',jam)
+        }
+
+    };
 	
 	HTMLElement.prototype.touchScroll=function(){
 			var isstart=false,startY,startTime,self=this,speed,bouceEl;
@@ -79,16 +100,20 @@ console.log(deltaY,st+deltaY)
 					isstart=false;
 					self.speedTo(speed);
 					e.preventDefault();
+                    removeBounce(self)
 				}
 			},false);
 
 			document.addEventListener(m_move,function(e){
 				if(isstart){
+                    e.preventDefault();
 					var newY=getEventY(e),
 					distance=startY-newY,
 					time=new Date().getTime()-startTime;
 //console.log('newY:'+newY+'time:'+time);
-					checkBouce(self,distance);
+					if(checkBouce(self,distance)){
+                        return ;
+                    }
 					self.scrollTop+=(distance);
 					if(typeof self.onMScroll=='function'){
 						self.onMScroll({scrollTop:self.scrollTop});
@@ -96,7 +121,7 @@ console.log(deltaY,st+deltaY)
 					speed=distance/time;
 					startY=newY;
 					startTime=new Date().getTime();
-					e.preventDefault();
+
 				}
 			},false);
 	};
@@ -127,17 +152,20 @@ console.log(deltaY,st+deltaY)
 				speed-=t*a
 				d+=(speed*t);
 				var lastScroll=self.scrollTop;//改变之前的值，如改变之后这个值不变，说明滚动到底了，该停止
+                checkBouce(self,d)
 				self.scrollTop=d+ori;
 				if(typeof self.onMScroll=='function'){
 					self.onMScroll({scrollTop:self.scrollTop});
 				}
 				if(oriSpeed*speed<=0||lastScroll==self.scrollTop){
-					clearInterval(iv);
+					//clearInterval(iv);
+                    if(self.scrollStop)self.scrollStop.call(self)
 				}
 			},t);
 			self.scrollTop=d+ori;
 			self.scrollStop=function(){
 				clearInterval(iv);
+                removeBounce(self)
 			}
 		}
 	};
