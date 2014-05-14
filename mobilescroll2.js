@@ -40,13 +40,14 @@
 			return jam;
 		},
         boucing=function(dy){
-            var jamHeight=dy;
-            console.log('jamHeight',jamHeight)
+            var jamHeight=dy/5;
+           // console.log('jamHeight',jamHeight)
             if(jamHeight>0){
-                jam.style.height=jamHeight+'px';
+                jam.style.height=Math.min(jamHeight,60)+'px';
             }else{
-                el.removeChild(jam);
-                el.mscrollJam=null;
+				
+				removeBounce(el);
+                
             }
 
         },
@@ -58,7 +59,7 @@
 
                 boucing(-deltaY);
 
-		}else if(st+deltaY>=el.scrollHeight-el.clientHeight){console.log('append')
+		}else if(st+deltaY>=el.scrollHeight-el.clientHeight){console.log('append',st+deltaY,el.scrollHeight,el.clientHeight)
 			el.appendChild(createJam());
 
                 boucing(deltaY);
@@ -68,22 +69,34 @@
 			el.removeChild(jam);
 			el.mscrollJam=null;
 
-		}
+		}//console.log('mjam',el.mscrollJam);
 		return el.mscrollJam;
 
     },
     removeBounce=function(el){
         var jam=el.mscrollJam;
         if(jam){
-            el.removeChild(jam);
-             el.mscrollJam=null;
-            //console.log('remove:',jam)
+            
+			 console.log(12,typeof jam.style.transitionDuration,typeof jam.style.webkitTransitionDuration);
+			 el.mscrollJam=null;
+			 var needWebkit=('webkitTransition' in jam.style),
+				 key=needWebkit?'webkitTransition':'transition';
+                
+				jam.style[key]='height .2s';
+				jam.style.height=0;
+				jam.addEventListener(needWebkit?'webkitTransitionEnd':'transitionend',function(e){
+					console.log('webkitTransitionEnd',e.type,jam,el.mscrollJam)
+					jam.parentNode.removeChild(jam);
+					el.mscrollJam=null;
+				},false);
+			
+            
         }
 
     };
 	
 	HTMLElement.prototype.touchScroll=function(){
-			var isstart=false,startY,startTime,self=this,speed,bouceEl;
+			var isstart=false,startY,startTime,self=this,speed;
 			self.addEventListener(m_start,function(e){
 				if(typeof self.scrollStop=="function"){self.scrollStop();}
 				
@@ -111,10 +124,10 @@
 					distance=startY-newY,
 					time=new Date().getTime()-startTime;
 //console.log('newY:'+newY+'time:'+time);
-					if(checkBouce(self,distance)){
+					if(checkBouce(self,distance)){console.log('pauce')
                         return ;
-                    }
-					self.scrollTop+=(distance);
+                    }//console.log('ye',distance)
+					self.scrollTop+=(distance);console.log('ye',distance,self.scrollTop)
 					if(typeof self.onMScroll=='function'){
 						self.onMScroll({scrollTop:self.scrollTop});
 					}
