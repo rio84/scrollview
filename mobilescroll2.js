@@ -40,28 +40,29 @@
 			return jam;
 		},
         boucing=function(dy){
-            var jamHeight=dy/5;
-           // console.log('jamHeight',jamHeight)
+            var jamHeight=dy/3;
+           // console.log('jamHeight',jamHeight,dy)
             if(jamHeight>0){
-                jam.style.height=Math.min(jamHeight,60)+'px';
+                jam.style.height=Math.min(jamHeight,100)+'px';
             }else{
-				
+
 				removeBounce(el);
-                
+
             }
 
         },
-			deltaY=deltaY||0;
+	    deltaY=deltaY||0;
 //console.log(deltaY,st+deltaY)
 		if(st+deltaY<=0){
 			
-			el.insertBefore(createJam(),el.firstChild);//注意没有 firstChild 的情况。虽然这很变态
+			el.insertBefore(createJam(),el.firstChild);
 
-                boucing(-deltaY);
+            boucing(-deltaY);
 
-		}else if(st+deltaY>=el.scrollHeight-el.clientHeight){console.log('append',st+deltaY,el.scrollHeight,el.clientHeight)
+		}else if(st+deltaY>=el.scrollHeight-el.clientHeight){
+            //console.log('append',st+deltaY,el.scrollHeight,el.clientHeight)
 			el.appendChild(createJam());
-
+            el.scrollTop=st+deltaY;
                 boucing(deltaY);
 
 		}else if(jam){
@@ -75,24 +76,33 @@
     },
     removeBounce=function(el){
         var jam=el.mscrollJam;
-        if(jam){
+        if(jam&&!jam._transitioning){
             
-			 console.log(12,typeof jam.style.transitionDuration,typeof jam.style.webkitTransitionDuration);
-			 el.mscrollJam=null;
+			// console.log(12,typeof jam.style.transitionDuration,typeof jam.style.webkitTransitionDuration);
+			// el.mscrollJam=null;
+            jam._transitioning=true;
 			 var needWebkit=('webkitTransition' in jam.style),
 				 key=needWebkit?'webkitTransition':'transition';
                 
 				jam.style[key]='height .2s';
 				jam.style.height=0;
 				jam.addEventListener(needWebkit?'webkitTransitionEnd':'transitionend',function(e){
-					console.log('webkitTransitionEnd',e.type,jam,el.mscrollJam)
+					//console.log('webkitTransitionEnd',e.type,jam,'removing')
 					jam.parentNode.removeChild(jam);
 					el.mscrollJam=null;
+                    jam._transitioning=undefined;
 				},false);
 			
             
         }
 
+    },_fire=function(eventName,data){
+            var el=this;
+            if(typeof el['on'+eventName]=='function'){
+                data=data||{};
+                data.type=eventName;
+                el['on'+eventName].call(el,data);
+            }
     };
 	
 	HTMLElement.prototype.touchScroll=function(){
@@ -125,12 +135,18 @@
 					time=new Date().getTime()-startTime;
 //console.log('newY:'+newY+'time:'+time);
 					if(checkBouce(self,distance)){
-                       
+                        _fire.call(self,'MScrollBounce',{
+                            scrollTop:self.scrollTop,
+                            deltaY:distance
+                        });
+                       return;
                     }//console.log('ye',distance)
 					self.scrollTop+=(distance);//console.log('ye',distance,self.scrollTop)
-					if(typeof self.onMScroll=='function'){
-						self.onMScroll({scrollTop:self.scrollTop,status:'bounce'});
-					}
+
+                    _fire.call(self,'MScrolling',{
+                        scrollTop:self.scrollTop,
+                        deltaY:distance
+                    });
 					speed=distance/time;
 					startY=newY;
 					startTime=new Date().getTime();
@@ -167,9 +183,11 @@
 				var lastScroll=self.scrollTop;//改变之前的值，如改变之后这个值不变，说明滚动到底了，该停止
                 checkBouce(self,d)
 				self.scrollTop=d+ori;
-				if(typeof self.onMScroll=='function'){
-					self.onMScroll({scrollTop:self.scrollTop});
-				}
+
+                _fire.call(self,'MScrolling',{
+                    scrollTop:self.scrollTop,
+                    deltaY:d
+                });
 				if(oriSpeed*speed<=0||lastScroll==self.scrollTop){
 					//clearInterval(iv);
                     if(self.scrollStop)self.scrollStop.call(self)

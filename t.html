@@ -25,7 +25,7 @@ html,body{
 	<div id="test">
 		<div id="in"></div>
 	</div>
-	<script src="mobilescroll2.js?t=2"></script>
+	<script src="mobilescroll2.js?t=4"></script>
 	<script>
 	var l=document.getElementById("log");
 	function log(s){
@@ -52,9 +52,14 @@ html,body{
 		
 	}
 	div.touchScroll();
-	div.onMScroll=function(e){
-		//log(e.scrollTop)
+	div.onMScrolling=function(e){
+		//console.log(e.type,e.scrollTop, e.deltaY)
 	}
+
+    div.onMScrollBounce=function(e){
+       // console.log(e.type,e.scrollTop, e.deltaY)
+    }
+
 
 	</script>
 
