@@ -124,12 +124,12 @@
 					distance=startY-newY,
 					time=new Date().getTime()-startTime;
 //console.log('newY:'+newY+'time:'+time);
-					if(checkBouce(self,distance)){console.log('pauce')
-                        return ;
+					if(checkBouce(self,distance)){
+                       
                     }//console.log('ye',distance)
-					self.scrollTop+=(distance);console.log('ye',distance,self.scrollTop)
+					self.scrollTop+=(distance);//console.log('ye',distance,self.scrollTop)
 					if(typeof self.onMScroll=='function'){
-						self.onMScroll({scrollTop:self.scrollTop});
+						self.onMScroll({scrollTop:self.scrollTop,status:'bounce'});
 					}
 					speed=distance/time;
 					startY=newY;
