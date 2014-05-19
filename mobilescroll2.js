@@ -114,9 +114,7 @@
             
         }
 
-    },bouceOnce=function(deltaY){
-		
-	},
+    },
 	_fire=function(eventName,data){
             var el=this;
             if(typeof el['on'+eventName]=='function'){
@@ -183,6 +181,7 @@
 					startPos=newPos;
 				}
 			},false);
+			return this;
 	};
 
 	/*
@@ -243,6 +242,13 @@
 				_fire.call(self,'MScrollStop');
 			}
 		}
+		return this;
+	};
+	HTMLElement.prototype.scrollTo=function(x,y){
+		(x!==undefined)&&(this.scrollTop=x);
+		(x!==undefined)&&(this.scrollLeft=y);
+		return this;
+
 	};
 })('ontouchend' in document);
 /***************************** package end ***************************************/
