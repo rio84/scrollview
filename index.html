@@ -17,12 +17,13 @@ html,body,div{
 </style>
 <span id="log"></span>
 <!--
-滚动元素必须设置固定高度且overflow:hidden
+滚动元素必须设置固定高度且overflow-x:auto;或overflow-y:auto;
 -->
 <scrollview id="s">
-	<!--<bounce><span>下拉刷新</span></bounce>-->
+	<bounce><span>上边提示~~</span></bounce>
 	<content id="test">
 	</content>
+	<bounce><span>没有更多了~~</span></bounce>
 </scrollview>
 
 <style>
@@ -61,7 +62,6 @@ img{margin:2%;width:45%;}
 	for(var i=0,n;n=imgs[i];i++){
 		var img=new Image();
 		img.src=n;
-		//img.onload=imgLoad;
 		fg.appendChild(img);
 	}
 	div.appendChild(fg);
@@ -72,12 +72,17 @@ img{margin:2%;width:45%;}
 	s.addEventListener('scroll',function(e){
 		console.log('scrolling',e);
 	});
-	s.addEventListener('mscroll',function(e){
-		console.log('mmmmming',e);
+	
+	s.addEventListener('scrollStop',function(e){
+		console.log('scrollStop',e);
 	});
-	s.addEventListener('scrollx',function(e){
-		console.log('xxxxing',e);
+	/*
+	s.addEventListener('scrollBounce',function(e){
+		console.log('scrollBounce',e);
 	});
+	s.addEventListener('scrollBounceEnd',function(e){
+		console.log('scrollBounceEnd',e);
+	});*/
 	</script>
 
 </body>

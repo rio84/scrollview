@@ -23,6 +23,12 @@
             m_start=supportTouch?'touchstart':'mousedown',
             m_move=supportTouch?'touchmove':'mousemove',
             m_end=supportTouch?'touchend':'mouseup',
+			eventType={//事件列表
+				SCROLL:'scroll',
+				SCROLLSTOP:'scrollStop',
+				BOUNCE:'scrollBounce',
+				BOUNCEEND:'scrollBounceEnd'
+			},
             defaultConfig={
                 criticalSpeed:0.06,
                 a:1/500,
@@ -97,7 +103,7 @@
                         }else{
                             jam.style[sname.toLowerCase()]=Math.min(jamDelta,maxBounce)+'px';
 
-                            _fire.call(el,'MScrollBounce',{
+                            _fire.call(el,eventType.BOUNCE,{
                                 scrollTop:self.scrollTop,
                                 scrollLeft:self.scrollLeft,
                                 deltaY:isY?jamDelta:0,
@@ -156,7 +162,7 @@
 						jam.style[key]='';
                         el.mscrollJam=null;
                         jam._removing=undefined;
-                        _fire.call(el,'MScrollBounceEnd',{
+                        _fire.call(el,eventType.BOUNCEEND,{
                             scrollTop:el.scrollTop,
                             scrollLeft:el.scrollLeft
                         });
@@ -211,7 +217,7 @@
                 }
             }
             isY=config.direction!=='x';
-            self.__mscroll_config=config;console.log('cfg',config)
+            self.__mscroll_config=config;//console.log('cfg',config)
             self.addEventListener(m_start,function(e){
                 if(typeof self.scrollStop=="function"){self.scrollStop();}
 
@@ -277,7 +283,7 @@
                         speed=distanceX/time;
 						_scrolled=lastScroll!=self.scrollLeft;
                     }
-                    _scrolled&&_fire.call(self,'scroll',{
+                    _scrolled&&_fire.call(self,eventType.SCROLL,{
                         scrollTop:self.scrollTop,
                         scrollLeft:self.scrollLeft,
                         deltaY:distanceY,
@@ -315,7 +321,7 @@
             self.scrollStop=function(){
                 iv&&clearInterval(iv);
                bounce&& removeBounce(self);
-                _fire.call(self,'scrollStop');
+                _fire.call(self,eventType.SCROLLSTOP);
                 self.scrollStop=null;
             }
             if(speed&&Math.abs(speed)>criticalSpeed){
@@ -331,7 +337,7 @@
 
                         self[scName]=d+ori;
                         if(!bouncing||!bounce){
-                            _fire.call(self,'scroll',{
+                            _fire.call(self,eventType.SCROLL,{
                                 scrollTop:self.scrollTop,
                                 scrollLeft:self.scrollLeft,
                                 deltaY:isY?d:0,
