@@ -1,0 +1,21 @@
+﻿{
+    "name": "repo",
+    "version": "0.0.1",
+    "private": "true",
+    "description": "this is an project",
+    "main": "index.js",
+    "scripts": {},
+    "repository": {
+        "type": "git"
+    },
+    "keywords": [
+        "scrollview","overflow","android","ios","webview"
+    ],
+    "author": "shengqing.wr",
+    
+    "dependencies": {
+        
+        "gulp": "~3.6.0",
+        "gulp-uglify": "~0.0.0"
+    }
+}
