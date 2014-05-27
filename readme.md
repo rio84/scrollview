@@ -11,6 +11,7 @@
 
 
 ## methods
-
+* very easy
 ## demo
+* index.html
 
