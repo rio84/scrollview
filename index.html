@@ -30,11 +30,14 @@ scrollview{
 }
 img{margin:2%;width:45%;max-width:300px;max-height:300px;}
 </style>
-<scrollview id="s">
-	<bounce><span>上边提示~~</span></bounce>
+<scrollview id="scollview">
+	<bounce><span>head bounce content~~</span></bounce>
 	<content id="test">
+	<!--
+		your content here 
+	-->
 	</content>
-	<bounce><span>没有更多了~~</span></bounce>
+	<bounce><span>no more~~</span></bounce>
 </scrollview>
 
 <script src="scrollview.js"></script>
@@ -52,19 +55,19 @@ div.appendChild(fg);
 </script>
 
 	<script>
-	var s=document.getElementById('s');
-	s.addEventListener('scroll',function(e){
+	var scollview=document.getElementById('scollview');
+	scollview.addEventListener('scroll',function(e){
 		console.log('scrolling',e);
 	});
-	
-	s.addEventListener('scrollStop',function(e){
+	//three below is custom event
+	scollview.addEventListener('scrollStop',function(e){
 		console.log('scrollStop',e);
 	});
 	/*
-	s.addEventListener('scrollBounce',function(e){
+	scollview.addEventListener('scrollBounce',function(e){
 		console.log('scrollBounce',e);
 	});
-	s.addEventListener('scrollBounceEnd',function(e){
+	scollview.addEventListener('scrollBounceEnd',function(e){
 		console.log('scrollBounceEnd',e);
 	});*/
 	</script>
