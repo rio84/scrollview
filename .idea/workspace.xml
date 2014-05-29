@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1897fb51-5814-4c66-bb80-f69d05c32de8" name="Default" comment="" />
+    <list default="true" id="1897fb51-5814-4c66-bb80-f69d05c32de8" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scrollview.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    </list>
     <ignored path="scrollview.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,10 +33,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="scrollview.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="scrollview.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scrollview.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="306" column="25" selection-start="11325" selection-end="11325" vertical-scroll-proportion="0.2720126" vertical-offset="5641" max-vertical-offset="7543">
+            <state line="306" column="25" selection-start="11325" selection-end="11325" vertical-scroll-proportion="0.0" vertical-offset="5641" max-vertical-offset="7543">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="649">
               <folding />
             </state>
           </provider>
@@ -233,13 +252,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="12" selection-start="19" selection-end="19" vertical-scroll-proportion="0.029275808" vertical-offset="0" max-vertical-offset="649">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scrollview.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="636">
@@ -249,7 +261,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/scrollview.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="306" column="25" selection-start="11325" selection-end="11325" vertical-scroll-proportion="0.2720126" vertical-offset="5641" max-vertical-offset="7543">
+        <state line="306" column="25" selection-start="11325" selection-end="11325" vertical-scroll-proportion="0.0" vertical-offset="5641" max-vertical-offset="7543">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="649">
           <folding />
         </state>
       </provider>
