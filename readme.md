@@ -11,35 +11,63 @@
 * descide the direction to scroll according to css overflow settings. eg:
 
     	scrollview{
-    		overflow-x:hidden;/** pay attention */
-    		overflow-y:auto;/** pay attention; */
+    		overflow-x:hidden;/*  */
+    		overflow-y:auto;/* scroll direction is y */
     	}
 * 'bounce' element usage:
 
 		<scrollview id="scollview">
 			<bounce>
-				<span>head bounce content~~</span><!-- bounce content -->
+				<!-- bounce content -->
+				<span>head bounce content~~</span>
 			</bounce>
 			<content>
 				<!--
 					your content here 
 				-->
 			</content>
-			<bounce>
+			<bounce>			
 				<span>no more~~</span>
 			</bounce>
 		</scrollview>
 
 
 
-## methods
+
+## Methods:
 
 ### scrollTo(x,y)
+* x - [Number] scrollLeft value
+* y - [Number] scrollTop value
+* return this
 
 ### speedTo(speed,direction,bounce)
+* speed - [Number] px/ms
+* direction - [String] 'x' or 'y', default:y
+* bounce - [Boolean]
 
 
 
-## demo
-* index.html
+## Events:
+you can use both:
+
+	el.addEventListener('scroll',function(){},false)
+and 
+
+	el.onscroll=function(){}
+### scroll
+* dispatch when scrolling
+
+### scrollstop
+* dispatch when scroll is end
+
+### scrollbounce
+* dispatch when scroll is bouncing
+
+### scrollbouncestop
+* dispatch when bouce is end
+
+
+
+
 

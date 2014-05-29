@@ -210,7 +210,7 @@
 			return cfg;
 			},
 	inhance={
-        touchScroll:function(config){
+        touchScroll:function(){
             var isstart=false,startPos={},startTime,self=this,speed,config=getElConfig(self),
                 isY;
 
