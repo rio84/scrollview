@@ -25,9 +25,9 @@
             m_end=supportTouch?'touchend':'mouseup',
 			eventType={//事件列表
 				SCROLL:'scroll',
-				SCROLLSTOP:'scrollStop',
-				BOUNCE:'scrollBounce',
-				BOUNCEEND:'scrollBounceEnd'
+				SCROLLSTOP:'scrollstop',
+				BOUNCE:'scrollbounce',
+				BOUNCEEND:'scrollbouncestop'
 			},
             defaultConfig={
                 criticalSpeed:0.06,
@@ -188,6 +188,10 @@
 				var evt=new Event(eventName);
 				evt.data=data;//原生事件，另加的属性没有用呢
 				this.dispatchEvent(evt);
+                if(typeof el['on'+eventName]=='function'){
+
+                    el['on'+eventName].call(el,evt);
+                }
             },
 		getElConfig=function(el){
 			var 
