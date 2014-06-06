@@ -321,7 +321,7 @@
             //过滤速度，不能大于5px/ms
                 speed=Math.max(-3,Math.min(3,speed)),//s=speed*spend/a/2 保证最大划动距离为2250px
                 distance=Math.pow(speed,2)/a/ 2;
-
+            if(distance<0.5){return;}
             self.scrollStop=function(){
                 iv&&clearInterval(iv);
                bounce&& removeBounce(self);
