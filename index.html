@@ -58,10 +58,12 @@ div.appendChild(fg);
 	var scollview=document.getElementById('scollview');
 	scollview.addEventListener('scroll',function(e){
 		console.log('scrolling',e);
+		//alert('scroll')
 	});
 	//three below is custom event
 	scollview.addEventListener('scrollStop',function(e){
 		console.log('scrollStop',e);
+		//alert('scroll')
 	});
 	/*
 	scollview.addEventListener('scrollBounce',function(e){
