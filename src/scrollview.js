@@ -25,9 +25,9 @@
             m_end=supportTouch?'touchend':'mouseup',
 			eventType={//事件列表
 				SCROLL:'scroll',
-				SCROLLSTOP:'scrollStop',
-				BOUNCE:'scrollBounce',
-				BOUNCEEND:'scrollBounceEnd'
+				SCROLLSTOP:'scrollstop',
+				BOUNCE:'scrollbounce',
+				BOUNCEEND:'scrollbouncestop'
 			},
             defaultConfig={
                 criticalSpeed:0.06,
@@ -188,6 +188,10 @@
 				//var evt=new Event(eventName);
 				evt.data=data;//原生事件，另加的属性没有用呢
 				this.dispatchEvent(evt);
+                if(typeof el['on'+eventName]=='function'){
+
+                    el['on'+eventName].call(el,evt);
+                }
             },
 		getElConfig=function(el){
 			var 
@@ -206,7 +210,7 @@
 			return cfg;
 			},
 	inhance={
-        touchScroll:function(config){
+        touchScroll:function(){
             var isstart=false,startPos={},startTime,self=this,speed,config=getElConfig(self),
                 isY;
 
@@ -234,7 +238,7 @@
                     isstart=false;
                     self.speedTo(speed,config.direction,config.bounce);
                     e.preventDefault();
-                   // removeBounce(self)
+                    removeBounce(self)
                 }
             },false);
 
@@ -317,7 +321,7 @@
             //过滤速度，不能大于5px/ms
                 speed=Math.max(-3,Math.min(3,speed)),//s=speed*spend/a/2 保证最大划动距离为2250px
                 distance=Math.pow(speed,2)/a/ 2;
-
+            if(Math.abs(distance)<0.5){return;}
             self.scrollStop=function(){
                 iv&&clearInterval(iv);
                bounce&& removeBounce(self);

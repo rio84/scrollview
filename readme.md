@@ -1,18 +1,73 @@
-﻿#scrollView
+#scrollView
 ----
 * author: rio84@qq.com
 * version:1.0.0
 
  --------
 
-## 说明
-* 根据css overflow 的设置来决定x,y 方向的滚动
-* 根据<bounce /> 子节点来判断是否要弹
+## Getting started
+* Active an customElement with tagName 'scrollview' and 'bounce'. It's developed for mobile webview or browser. It behaiver the same as overflow:auto in PC browser.
+* All members of the scrollview element inherit from HTMLElement.
+* descide the direction to scroll according to css overflow settings. eg:
+
+    	scrollview{
+    		overflow-x:hidden;/*  */
+    		overflow-y:auto;/* scroll direction is y */
+    	}
+* 'bounce' element usage:
+
+		<scrollview id="scollview">
+			<bounce>
+				<!-- bounce content -->
+				<span>head bounce content~~</span>
+			</bounce>
+			<content>
+				<!--
+					your content here 
+				-->
+			</content>
+			<bounce>			
+				<span>no more~~</span>
+			</bounce>
+		</scrollview>
 
 
-## methods
-* very easy
 
-## demo
-* index.html
+
+## Methods:
+
+### scrollTo(x,y)
+* x - [Number] scrollLeft value
+* y - [Number] scrollTop value
+* return this
+
+### speedTo(speed,direction,bounce)
+* speed - [Number] px/ms
+* direction - [String] 'x' or 'y', default:y
+* bounce - [Boolean]
+
+
+
+## Events:
+you can use both:
+
+	el.addEventListener('scroll',function(){},false)
+and 
+
+	el.onscroll=function(){}
+### scroll
+* dispatch when scrolling
+
+### scrollstop
+* dispatch when scroll is end
+
+### scrollbounce
+* dispatch when scroll is bouncing
+
+### scrollbouncestop
+* dispatch when bouce is end
+
+
+
+
 
