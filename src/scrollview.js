@@ -180,12 +180,12 @@
                     data.type=eventName;
                     el['on'+eventName].call(el,data);
                 }*/
-				//var evt = document.createEvent('HTMLEvents');
+				var evt = document.createEvent('HTMLEvents');
 				// initEvent接受3个参数：
 				// 事件类型，是否冒泡，是否阻止浏览器的默认行为
-				//evt.initEvent(eventName, true, true);
-				//evt.eventType = 'mscrollEvent';
-				var evt=new Event(eventName);
+				evt.initEvent(eventName, true, true);
+				evt.eventType = 'mscrollEvent';
+				//var evt=new Event(eventName);
 				evt.data=data;//原生事件，另加的属性没有用呢
 				this.dispatchEvent(evt);
                 if(typeof this['on'+eventName]=='function'){
