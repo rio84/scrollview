@@ -1,9 +1,16 @@
 #scrollView
 ----
 * author: rio84@qq.com
-* version:1.0.0
+* version:1.0.1
 
  --------
+
+
+## Updates
+### 2014/6/10 21:25
+* disable tap when scrolling
+* fix _fire el is undefined
+
 
 ## Getting started
 * Active an customElement with tagName 'scrollview' and 'bounce'. It's developed for mobile webview or browser. It behaiver the same as overflow:auto in PC browser.
