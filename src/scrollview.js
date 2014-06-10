@@ -188,12 +188,41 @@
 				var evt=new Event(eventName);
 				evt.data=data;//原生事件，另加的属性没有用呢
 				this.dispatchEvent(evt);
-                if(typeof el['on'+eventName]=='function'){
+                if(typeof this['on'+eventName]=='function'){
 
-                    el['on'+eventName].call(el,evt);
+                    this['on'+eventName].call(this,evt);
                 }
             },
-		getElConfig=function(el){
+            disableTap=function(el){
+                if(el.__tapmask)return el;
+                var mask=document.createElement('button'),ofp;
+                mask.style.borderWidth=0;
+                mask.style.backgroundColor='transparent';
+                mask.style.width=el.clientWidth+'px';
+                mask.style.height=el.clientHeight+'px';
+                mask.style.position='absolute';
+                mask.style.zIndex=10;
+
+                el.insertBefore(mask,el.firstChild);
+
+
+                el.__tapmask=mask;
+
+                ofp=el.offsetParent;
+                console.log(ofp,ofp.offsetTop,el.offsetTop,el.offsetHeight)
+                mask.style.top=(el.offsetTop-ofp.offsetTop)+'px';
+                mask.style.left=(el.offsetLeft-ofp.offsetLeft)+'px';
+                return el;
+//滚动时用mask 来阻止tap
+            },enableTap=function(el){//return;
+                if(el.__tapmask){
+                    el.removeChild(el.__tapmask);
+                    delete el.__tapmask;
+                }
+                return el;
+            },
+
+     getElConfig=function(el){
 			var 
 			cfg={
 				bounce:el.children[0].tagName.toLowerCase()=='bounce'
@@ -322,7 +351,9 @@
                 speed=Math.max(-3,Math.min(3,speed)),//s=speed*spend/a/2 保证最大划动距离为2250px
                 distance=Math.pow(speed,2)/a/ 2;
             if(Math.abs(distance)<0.5){return;}
+            disableTap(self);
             self.scrollStop=function(){
+                enableTap(self);
                 iv&&clearInterval(iv);
                bounce&& removeBounce(self);
                 _fire.call(self,eventType.SCROLLSTOP);
