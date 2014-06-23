@@ -255,7 +255,7 @@
                 if(typeof self.scrollStop=="function"){
                     self.scrollStop();
                     e.preventDefault();
-                    e.returnValue=false;
+                    e.stopPropagation();
                 }
 
                 startPos=getClient(e);
@@ -354,7 +354,10 @@
             //过滤速度，不能大于5px/ms
                 speed=Math.max(-3,Math.min(3,speed)),//s=speed*spend/a/2 保证最大划动距离为2250px
                 distance=Math.pow(speed,2)/a/ 2;
-            if(Math.abs(distance)<0.5){return;}
+            if(Math.abs(distance)<0.5){
+                _fire.call(self,'MScrollStop');
+                return;
+            }
             disableTap(self);
             self.scrollStop=function(){
                 enableTap(self);
