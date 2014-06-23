@@ -203,8 +203,7 @@
                 mask.style.position='absolute';
                 mask.style.zIndex=10;
 
-                //el.insertBefore(mask,el.firstChild);
-                document.body.appendChild(mask)
+                el.insertBefore(mask,el.firstChild);
 
 
                 el.__tapmask=mask;
@@ -217,7 +216,7 @@
 //滚动时用mask 来阻止tap
             },enableTap=function(el){//return;
                 if(el.__tapmask){
-                    el.__tapmask.parentNode.removeChild(el.__tapmask);
+                    el.removeChild(el.__tapmask);
                     delete el.__tapmask;
                 }
                 return el;
@@ -253,7 +252,11 @@
             isY=config.direction!=='x';
             self.__mscroll_config=config;//console.log('cfg',config)
             self.addEventListener(m_start,function(e){
-                if(typeof self.scrollStop=="function"){self.scrollStop();}
+                if(typeof self.scrollStop=="function"){
+                    self.scrollStop();
+                    e.preventDefault();
+                    e.returnValue=false;
+                }
 
                 startPos=getClient(e);
 
