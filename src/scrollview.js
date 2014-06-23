@@ -203,7 +203,8 @@
                 mask.style.position='absolute';
                 mask.style.zIndex=10;
 
-                el.insertBefore(mask,el.firstChild);
+                //el.insertBefore(mask,el.firstChild);
+                document.body.appendChild(mask)
 
 
                 el.__tapmask=mask;
@@ -216,7 +217,7 @@
 //滚动时用mask 来阻止tap
             },enableTap=function(el){//return;
                 if(el.__tapmask){
-                    el.removeChild(el.__tapmask);
+                    el.__tapmask.parentNode.removeChild(el.__tapmask);
                     delete el.__tapmask;
                 }
                 return el;
